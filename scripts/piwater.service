@@ -1,0 +1,31 @@
+[Unit]
+Description=Pi Water Control System
+# 确保在网络连接建立后再启动
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+# 以 feng 用户运行
+User=feng
+Group=feng
+
+# 项目的根目录
+WorkingDirectory=/home/feng/pi_water
+
+# 您的 Python 解释器路径（通常是虚拟环境或系统 Python）
+# 如果您使用的是虚拟环境，请将其更改为类似 /home/pi/pi_water/venv/bin/python 的路径
+ExecStart=/usr/bin/python3 main.py
+
+# 服务异常退出后自动重启
+Restart=always
+# 重启前等待 5 秒，防止崩溃过快导致系统卡死
+RestartSec=5
+
+# 将标准输出和错误输出重定向到 systemd 的日志系统
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=piwater
+
+[Install]
+# 设定为在多用户图形界面/命令行就绪后自启
+WantedBy=multi-user.target
