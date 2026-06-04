@@ -1,0 +1,11 @@
+# pi_water 项目依赖
+# 目标平台：树莓派 OS (Debian/Bookworm)
+# 安装方式：pip install -r requirements.txt
+#           或 sudo apt install python3-paho-mqtt (提供 1.6.x)
+#
+# 注意：paho-mqtt 2.0+ (2024-02) 引入了破坏性变更 (CallbackAPIVersion)
+#       请勿升级到 2.x，除非同步更新 water_mqtt.py 中的客户端初始化代码。
+
+paho-mqtt==1.6.1
+opencv-python>=4.5.0   # water_camera.py 使用 cv2
+RPi.GPIO>=0.7.0        # water_gpio.py 使用 GPIO (仅树莓派)

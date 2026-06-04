@@ -36,6 +36,10 @@ class PhotoScheduler:
         self.logger.info(f"开启 {delay}s 延时拍照定时器...")
         Timer(delay, self._take_photo).start()
     
+    def stop(self):
+        """停止调度器（当前无持久资源，预留接口）"""
+        self.logger.info("PhotoScheduler 已停止")
+
     def _take_photo(self):
         """执行拍照并发送MQTT消息 (单次)"""
         try:
@@ -504,6 +508,7 @@ def check_single_instance(pid_file="/tmp/piwater.pid"):
         f.flush()
         return f
     except IOError:
+        f.close()   # 获取锁失败时关闭文件句柄，避免泄漏
         return None
 
 def main():
